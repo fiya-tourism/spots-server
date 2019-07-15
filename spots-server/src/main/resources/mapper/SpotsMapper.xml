@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fy.spotsserver.mapper.SpotsMapper">
+  <resultMap id="BaseResultMap" type="com.fy.spotsserver..entity.Spots">
+    <id column="spots_id" jdbcType="INTEGER" property="spotsId" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="spots_name" jdbcType="VARCHAR" property="spotsName" />
+    <result column="spots_type" jdbcType="INTEGER" property="spotsType" />
+    <result column="spots_introduce_id" jdbcType="VARCHAR" property="spotsIntroduceId" />
+    <result column="spots_address" jdbcType="VARCHAR" property="spotsAddress" />
+    <result column="spots_price" jdbcType="DOUBLE" property="spotsPrice" />
+    <result column="spots_phone" jdbcType="VARCHAR" property="spotsPhone" />
+    <result column="spots_open_time" jdbcType="TIMESTAMP" property="spotsOpenTime" />
+    <result column="spots_repertory" jdbcType="INTEGER" property="spotsRepertory" />
+    <result column="spots_activity" jdbcType="VARCHAR" property="spotsActivity" />
+    <result column="spots_venue" jdbcType="VARCHAR" property="spotsVenue" />
+    <result column="spots_gotime" jdbcType="TIMESTAMP" property="spotsGotime" />
+    <result column="spots_release" jdbcType="DATE" property="spotsRelease" />
+    <result column="spots_create" jdbcType="DATE" property="spotsCreate" />
+    <result column="spots_update" jdbcType="DATE" property="spotsUpdate" />
+    <result column="spots_yn" jdbcType="INTEGER" property="spotsYn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    spots_id, staff_id, spots_name, spots_type, spots_introduce_id, spots_address, spots_price, 
+    spots_phone, spots_open_time, spots_repertory, spots_activity, spots_venue, spots_gotime, 
+    spots_release, spots_create, spots_update, spots_yn
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fy_spots
+    where spots_id = #{spotsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fy_spots
+    where spots_id = #{spotsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fy.spotsserver..entity.Spots">
+    insert into fy_spots (spots_id, staff_id, spots_name, 
+      spots_type, spots_introduce_id, spots_address, 
+      spots_price, spots_phone, spots_open_time, 
+      spots_repertory, spots_activity, spots_venue, 
+      spots_gotime, spots_release, spots_create, 
+      spots_update, spots_yn)
+    values (#{spotsId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{spotsName,jdbcType=VARCHAR}, 
+      #{spotsType,jdbcType=INTEGER}, #{spotsIntroduceId,jdbcType=VARCHAR}, #{spotsAddress,jdbcType=VARCHAR}, 
+      #{spotsPrice,jdbcType=DOUBLE}, #{spotsPhone,jdbcType=VARCHAR}, #{spotsOpenTime,jdbcType=TIMESTAMP}, 
+      #{spotsRepertory,jdbcType=INTEGER}, #{spotsActivity,jdbcType=VARCHAR}, #{spotsVenue,jdbcType=VARCHAR}, 
+      #{spotsGotime,jdbcType=TIMESTAMP}, #{spotsRelease,jdbcType=DATE}, #{spotsCreate,jdbcType=DATE}, 
+      #{spotsUpdate,jdbcType=DATE}, #{spotsYn,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fy.spotsserver..entity.Spots">
+    insert into fy_spots
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="spotsId != null">
+        spots_id,
+      </if>
+      <if test="staffId != null">
+        staff_id,
+      </if>
+      <if test="spotsName != null">
+        spots_name,
+      </if>
+      <if test="spotsType != null">
+        spots_type,
+      </if>
+      <if test="spotsIntroduceId != null">
+        spots_introduce_id,
+      </if>
+      <if test="spotsAddress != null">
+        spots_address,
+      </if>
+      <if test="spotsPrice != null">
+        spots_price,
+      </if>
+      <if test="spotsPhone != null">
+        spots_phone,
+      </if>
+      <if test="spotsOpenTime != null">
+        spots_open_time,
+      </if>
+      <if test="spotsRepertory != null">
+        spots_repertory,
+      </if>
+      <if test="spotsActivity != null">
+        spots_activity,
+      </if>
+      <if test="spotsVenue != null">
+        spots_venue,
+      </if>
+      <if test="spotsGotime != null">
+        spots_gotime,
+      </if>
+      <if test="spotsRelease != null">
+        spots_release,
+      </if>
+      <if test="spotsCreate != null">
+        spots_create,
+      </if>
+      <if test="spotsUpdate != null">
+        spots_update,
+      </if>
+      <if test="spotsYn != null">
+        spots_yn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="spotsId != null">
+        #{spotsId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="spotsName != null">
+        #{spotsName,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsType != null">
+        #{spotsType,jdbcType=INTEGER},
+      </if>
+      <if test="spotsIntroduceId != null">
+        #{spotsIntroduceId,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsAddress != null">
+        #{spotsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsPrice != null">
+        #{spotsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="spotsPhone != null">
+        #{spotsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsOpenTime != null">
+        #{spotsOpenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spotsRepertory != null">
+        #{spotsRepertory,jdbcType=INTEGER},
+      </if>
+      <if test="spotsActivity != null">
+        #{spotsActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsVenue != null">
+        #{spotsVenue,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsGotime != null">
+        #{spotsGotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spotsRelease != null">
+        #{spotsRelease,jdbcType=DATE},
+      </if>
+      <if test="spotsCreate != null">
+        #{spotsCreate,jdbcType=DATE},
+      </if>
+      <if test="spotsUpdate != null">
+        #{spotsUpdate,jdbcType=DATE},
+      </if>
+      <if test="spotsYn != null">
+        #{spotsYn,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fy.spotsserver..entity.Spots">
+    update fy_spots
+    <set>
+      <if test="staffId != null">
+        staff_id = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="spotsName != null">
+        spots_name = #{spotsName,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsType != null">
+        spots_type = #{spotsType,jdbcType=INTEGER},
+      </if>
+      <if test="spotsIntroduceId != null">
+        spots_introduce_id = #{spotsIntroduceId,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsAddress != null">
+        spots_address = #{spotsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsPrice != null">
+        spots_price = #{spotsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="spotsPhone != null">
+        spots_phone = #{spotsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsOpenTime != null">
+        spots_open_time = #{spotsOpenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spotsRepertory != null">
+        spots_repertory = #{spotsRepertory,jdbcType=INTEGER},
+      </if>
+      <if test="spotsActivity != null">
+        spots_activity = #{spotsActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsVenue != null">
+        spots_venue = #{spotsVenue,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsGotime != null">
+        spots_gotime = #{spotsGotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spotsRelease != null">
+        spots_release = #{spotsRelease,jdbcType=DATE},
+      </if>
+      <if test="spotsCreate != null">
+        spots_create = #{spotsCreate,jdbcType=DATE},
+      </if>
+      <if test="spotsUpdate != null">
+        spots_update = #{spotsUpdate,jdbcType=DATE},
+      </if>
+      <if test="spotsYn != null">
+        spots_yn = #{spotsYn,jdbcType=INTEGER},
+      </if>
+    </set>
+    where spots_id = #{spotsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fy.spotsserver..entity.Spots">
+    update fy_spots
+    set staff_id = #{staffId,jdbcType=INTEGER},
+      spots_name = #{spotsName,jdbcType=VARCHAR},
+      spots_type = #{spotsType,jdbcType=INTEGER},
+      spots_introduce_id = #{spotsIntroduceId,jdbcType=VARCHAR},
+      spots_address = #{spotsAddress,jdbcType=VARCHAR},
+      spots_price = #{spotsPrice,jdbcType=DOUBLE},
+      spots_phone = #{spotsPhone,jdbcType=VARCHAR},
+      spots_open_time = #{spotsOpenTime,jdbcType=TIMESTAMP},
+      spots_repertory = #{spotsRepertory,jdbcType=INTEGER},
+      spots_activity = #{spotsActivity,jdbcType=VARCHAR},
+      spots_venue = #{spotsVenue,jdbcType=VARCHAR},
+      spots_gotime = #{spotsGotime,jdbcType=TIMESTAMP},
+      spots_release = #{spotsRelease,jdbcType=DATE},
+      spots_create = #{spotsCreate,jdbcType=DATE},
+      spots_update = #{spotsUpdate,jdbcType=DATE},
+      spots_yn = #{spotsYn,jdbcType=INTEGER}
+    where spots_id = #{spotsId,jdbcType=INTEGER}
+  </update>
+</mapper>
