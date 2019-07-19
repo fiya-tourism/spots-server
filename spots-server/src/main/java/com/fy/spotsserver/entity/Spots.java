@@ -1,6 +1,7 @@
 package com.fy.spotsserver.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Document(collection = "Spots")
 @Data
-public class Spots{
+public class Spots implements Serializable {
 
     //旅游主键
     private Integer spotsId;

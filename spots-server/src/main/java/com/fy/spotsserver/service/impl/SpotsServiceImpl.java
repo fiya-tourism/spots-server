@@ -54,9 +54,7 @@ public class SpotsServiceImpl implements SpotsService {
     public Spots SoptByIdSelect(Integer spotsId) {
         Spots spots = spotsMapper.selectByPrimaryKey(spotsId);
         String selectcontent = Selectcontent(spotsId);
-        if (selectcontent==null){
-            return null;
-        }
+
         spots.setConentisert(selectcontent);
         return spots;
     }
