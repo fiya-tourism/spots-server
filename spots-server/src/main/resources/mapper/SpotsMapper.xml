@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fy.spotsserver.mapper.SpotsMapper">
-  <resultMap id="BaseResultMap" type="com.fy.spotsserver..entity.Spots">
+  <resultMap id="BaseResultMap" type="com.fy.spotsserver.entity.Spots">
     <id column="spots_id" jdbcType="INTEGER" property="spotsId" />
     <result column="staff_id" jdbcType="INTEGER" property="staffId" />
     <result column="spots_name" jdbcType="VARCHAR" property="spotsName" />
@@ -35,26 +35,28 @@
     delete from fy_spots
     where spots_id = #{spotsId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.fy.spotsserver..entity.Spots">
-    insert into fy_spots (spots_id, staff_id, spots_name, 
+  <insert id="insert" parameterType="com.fy.spotsserver.entity.Spots">
+    <selectKey keyProperty="spotsId" resultType="java.lang.Integer" order="AFTER">
+      select last_insert_id()
+    </selectKey>
+    insert into fy_spots (staff_id, spots_name,
       spots_type, spots_introduce_id, spots_address, 
       spots_price, spots_phone, spots_open_time, 
       spots_repertory, spots_activity, spots_venue, 
       spots_gotime, spots_release, spots_create, 
       spots_update, spots_yn)
-    values (#{spotsId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{spotsName,jdbcType=VARCHAR}, 
+    values (#{staffId,jdbcType=INTEGER}, #{spotsName,jdbcType=VARCHAR},
       #{spotsType,jdbcType=INTEGER}, #{spotsIntroduceId,jdbcType=VARCHAR}, #{spotsAddress,jdbcType=VARCHAR}, 
       #{spotsPrice,jdbcType=DOUBLE}, #{spotsPhone,jdbcType=VARCHAR}, #{spotsOpenTime,jdbcType=TIMESTAMP}, 
       #{spotsRepertory,jdbcType=INTEGER}, #{spotsActivity,jdbcType=VARCHAR}, #{spotsVenue,jdbcType=VARCHAR}, 
-      #{spotsGotime,jdbcType=TIMESTAMP}, #{spotsRelease,jdbcType=DATE}, #{spotsCreate,jdbcType=DATE}, 
+      #{spotsGotime,jdbcType=TIMESTAMP}, #{spotsRelease,jdbcType=DATE}, #{spotsCreate,jdbcType=DATE},
       #{spotsUpdate,jdbcType=DATE}, #{spotsYn,jdbcType=INTEGER})
+
   </insert>
-  <insert id="insertSelective" parameterType="com.fy.spotsserver..entity.Spots">
+  <insert id="insertSelective" parameterType="com.fy.spotsserver.entity.Spots">
     insert into fy_spots
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="spotsId != null">
-        spots_id,
-      </if>
+
       <if test="staffId != null">
         staff_id,
       </if>
@@ -105,9 +107,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="spotsId != null">
-        #{spotsId,jdbcType=INTEGER},
-      </if>
+
       <if test="staffId != null">
         #{staffId,jdbcType=INTEGER},
       </if>
@@ -158,7 +158,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fy.spotsserver..entity.Spots">
+  <update id="updateByPrimaryKeySelective" parameterType="com.fy.spotsserver.entity.Spots">
     update fy_spots
     <set>
       <if test="staffId != null">
@@ -212,7 +212,7 @@
     </set>
     where spots_id = #{spotsId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fy.spotsserver..entity.Spots">
+  <update id="updateByPrimaryKey" parameterType="com.fy.spotsserver.entity.Spots">
     update fy_spots
     set staff_id = #{staffId,jdbcType=INTEGER},
       spots_name = #{spotsName,jdbcType=VARCHAR},
@@ -232,4 +232,25 @@
       spots_yn = #{spotsYn,jdbcType=INTEGER}
     where spots_id = #{spotsId,jdbcType=INTEGER}
   </update>
+
+  <select id="SoptSelect" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List"></include>
+    from
+    fy_spots
+    <where>
+      spots_yn =0
+
+      <if test="spotId != null">
+      and  spots_id = #{spotId}
+      </if>
+    </where>
+  </select>
+  <update id="deleteupdate">
+    update fy_spots
+    set
+      spots_yn = 1
+    where spots_id = #{spotId}
+  </update>
+
 </mapper>

@@ -1,5 +1,9 @@
 package com.fy.spotsserver.service;
 
+import com.fy.spotsserver.Util.DataGrid;
+import com.fy.spotsserver.Util.PageUtils;
+import com.fy.spotsserver.entity.Spots;
+
 /**
  * @ProjectName: spots-server
  * @Package: com.fy.spotsserver.service
@@ -9,5 +13,13 @@ package com.fy.spotsserver.service;
  * @Date: 2019/7/15 14:42
  * @Version: 1.0
  */
-public class SpotsService {
+public interface SpotsService {
+
+    DataGrid SoptSelect(PageUtils page);
+
+    Integer insertSopt(Spots spots);
+
+    Spots SoptByIdSelect(Integer spotsId);
+
+    Integer deleteSopt(Integer spotsId);
 }
