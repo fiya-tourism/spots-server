@@ -40,8 +40,7 @@ public class SpotsServiceImpl implements SpotsService {
     @Override
     public DataGrid SoptSelect(PageUtils page) {
         PageHelper.startPage(page.getPage(),page.getRows());
-        Integer spotId = page.getUserId();
-        List<Spots> soptSelect= spotsMapper.SoptSelect(spotId);
+        List<Spots> soptSelect= spotsMapper.SoptSelect(page.getPostId());
         PageInfo<Spots> pageInfo=new PageInfo<>(soptSelect);
         DataGrid<Spots> dataGrid=new DataGrid<Spots>();
         dataGrid.setRows(soptSelect);
@@ -76,6 +75,7 @@ public class SpotsServiceImpl implements SpotsService {
     public Integer insertSopt(Spots spots) {
         if (spots.getSpotsId()!=null){
             spots.setSpotsUpdate(new Date());
+            spots.setSpotsYn(0);
             Integer i = spotsMapper.updateByPrimaryKey(spots);
             if (i!=null){
                 Integer updatecontent = updatecontent(spots);

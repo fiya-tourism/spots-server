@@ -14,6 +14,11 @@ public class PageUtils {
 	private int rows = 3;
 	/** 开始条数的下标 */
 	private int startPos;
+
+	//状态 1上架 、0未上架
+	private Integer grounding;
+	// 景区编号
+	private Integer postId;
 	
 	/** 排序列 */
 	private String sort;

@@ -1,6 +1,7 @@
 package com.fy.spotsserver.mapper;
 
 
+import com.fy.spotsserver.Util.PageUtils;
 import com.fy.spotsserver.entity.Spots;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

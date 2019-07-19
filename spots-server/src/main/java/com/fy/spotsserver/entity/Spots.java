@@ -44,6 +44,8 @@ public class Spots implements Serializable {
     private String spotsActivity;
     //集合地点
     private String spotsVenue;
+    //景区状态  1 上架/0 未上架
+    // private Integer spotsGrounding;
     //出发时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:dd" ,timezone = "GTM")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:dd")

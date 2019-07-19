@@ -40,14 +40,14 @@
       select last_insert_id()
     </selectKey>
     insert into fy_spots (staff_id, spots_name,
-      spots_type, spots_introduce_id, spots_address, 
-      spots_price, spots_phone, spots_open_time, 
+      spots_type, spots_introduce_id, spots_address,
+      spots_price, spots_phone, spots_open_time,
       spots_repertory, spots_activity, spots_venue, 
       spots_gotime, spots_release, spots_create, 
       spots_update, spots_yn)
     values (#{staffId,jdbcType=INTEGER}, #{spotsName,jdbcType=VARCHAR},
-      #{spotsType,jdbcType=INTEGER}, #{spotsIntroduceId,jdbcType=VARCHAR}, #{spotsAddress,jdbcType=VARCHAR}, 
-      #{spotsPrice,jdbcType=DOUBLE}, #{spotsPhone,jdbcType=VARCHAR}, #{spotsOpenTime,jdbcType=TIMESTAMP}, 
+      #{spotsType,jdbcType=INTEGER},#{spotsIntroduceId,jdbcType=VARCHAR}, #{spotsAddress,jdbcType=VARCHAR},
+    #{spotsPrice,jdbcType=DOUBLE}, #{spotsPhone,jdbcType=VARCHAR}, #{spotsOpenTime,jdbcType=TIMESTAMP},
       #{spotsRepertory,jdbcType=INTEGER}, #{spotsActivity,jdbcType=VARCHAR}, #{spotsVenue,jdbcType=VARCHAR}, 
       #{spotsGotime,jdbcType=TIMESTAMP}, #{spotsRelease,jdbcType=DATE}, #{spotsCreate,jdbcType=DATE},
       #{spotsUpdate,jdbcType=DATE}, #{spotsYn,jdbcType=INTEGER})
@@ -113,6 +113,9 @@
       </if>
       <if test="spotsName != null">
         #{spotsName,jdbcType=VARCHAR},
+      </if>
+      <if test="spotsType != null">
+        #{spotsType,jdbcType=INTEGER},
       </if>
       <if test="spotsType != null">
         #{spotsType,jdbcType=INTEGER},
@@ -240,12 +243,12 @@
     fy_spots
     <where>
       spots_yn =0
-
       <if test="spotId != null">
       and  spots_id = #{spotId}
       </if>
     </where>
   </select>
+
   <update id="deleteupdate">
     update fy_spots
     set
