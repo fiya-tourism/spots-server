@@ -34,10 +34,12 @@ public class SpotsController {
      * @param page
      * @return
      */
-    @RequestMapping(value = "soptSelect",method = RequestMethod.POST)
+    @RequestMapping(value = "soptSelect",method = RequestMethod.GET)
     @ResponseBody
-    public DataGrid<Spots> SoptSelect(@RequestBody PageUtils page){
-        return spotsService.SoptSelect(page);
+    public DataGrid<Spots> SoptSelect(@RequestParam("page") String page){
+        Gson gson = new Gson();
+        PageUtils pageUtils = gson.fromJson(page, PageUtils.class);
+        return spotsService.SoptSelect(pageUtils);
 
     }
     /**
