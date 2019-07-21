@@ -3,7 +3,9 @@ package com.fy.spotsserver.service.impl;
 import com.fy.spotsserver.Util.DataGrid;
 import com.fy.spotsserver.Util.PageUtils;
 import com.fy.spotsserver.entity.Spots;
+import com.fy.spotsserver.entity.Spotspicture;
 import com.fy.spotsserver.mapper.SpotsMapper;
+import com.fy.spotsserver.mapper.SpotspictureMapper;
 import com.fy.spotsserver.service.SpotsService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -30,6 +32,8 @@ import org.springframework.stereotype.Service;
 public class SpotsServiceImpl implements SpotsService {
     @Autowired
     private SpotsMapper spotsMapper;
+    @Autowired
+    private SpotspictureMapper spotspictureMapper;
     @Autowired
     private MongoTemplate mongoTemplate;
     // mongodb 数据库名
@@ -70,9 +74,10 @@ public class SpotsServiceImpl implements SpotsService {
     /**
      * 景点添加
      * @param spots
+     * @param spotspicture
      */
     @Override
-    public Integer insertSopt(Spots spots) {
+    public Integer insertSopt(Spots spots, Spotspicture spotspicture) {
         if (spots.getSpotsId()!=null){
             spots.setSpotsUpdate(new Date());
             spots.setSpotsYn(0);
@@ -89,6 +94,15 @@ public class SpotsServiceImpl implements SpotsService {
         spots.setSpotsYn(0);
         spotsMapper.insert(spots);
         Integer insert = spots.getSpotsId();
+        //多图片上传
+        spotspicture.setSpotsId(insert);
+        String[] split = spotspicture.getPictureUrl().split(",");
+        for (int i=1;i<=split.length;i++){
+            spotspicture.setPictureUrl(split[i]);
+            spotspicture.setPictureSequence(i);
+            spotspictureMapper.insert(spotspicture);
+        }
+
         if (insert!=null){
             Spots pos = new Spots();
             pos.setSpotsIntroduceId(insert+WH_NAME);
@@ -134,6 +148,12 @@ public class SpotsServiceImpl implements SpotsService {
             }
         }
         return 2;
+    }
+
+    @Override
+    public Spotspicture SoptSelectImg(Integer spotsId,Integer sequence) {
+
+        return spotspictureMapper.selectByPrimaryKey(spotsId,sequence);
     }
 
 

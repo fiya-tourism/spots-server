@@ -3,11 +3,13 @@ package com.fy.spotsserver.controller;
 import com.fy.spotsserver.Util.DataGrid;
 import com.fy.spotsserver.Util.PageUtils;
 import com.fy.spotsserver.entity.Spots;
+import com.fy.spotsserver.entity.Spotspicture;
 import com.fy.spotsserver.service.SpotsService;
 import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,9 +41,38 @@ public class SpotsController {
     public DataGrid<Spots> SoptSelect(@RequestParam("page") String page){
         Gson gson = new Gson();
         PageUtils pageUtils = gson.fromJson(page, PageUtils.class);
-        return spotsService.SoptSelect(pageUtils);
-
+        DataGrid dataGrid = spotsService.SoptSelect(pageUtils);
+        return dataGrid;
     }
+    /**
+     * 前台旅游查询带图片
+     * @param page
+     * @return
+     */
+    @RequestMapping(value = "SoptSelectImg",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Spots> SoptSelectImg(@RequestParam("page") String page){
+        Gson gson = new Gson();
+        PageUtils pageUtils = gson.fromJson(page, PageUtils.class);
+        DataGrid dataGrid = spotsService.SoptSelect(pageUtils);
+        List<Spots> rows = dataGrid.getRows();
+        List listSpotspicture = new ArrayList<Spotspicture>();
+        listSpotspicture.add(rows);
+        for (Spots li: rows) {
+            Integer spotsId = li.getSpotsId();
+            Spotspicture spotspictures = spotsService.SoptSelectImg(spotsId,1);
+            if (spotspictures==null){
+                return dataGrid.getRows();
+            }
+            //旅游图片查询
+            listSpotspicture.add(spotspictures);
+        }
+
+
+
+        return listSpotspicture;
+    }
+
     /**
      * 旅游根据Id查询
      * @param id
@@ -55,14 +86,16 @@ public class SpotsController {
 
     /**
      * 新增
-     * @param spot
+     * @param Spotostr
+     * @param spotspictures
      */
     @RequestMapping(value = "insertSopt",method = RequestMethod.POST)
     @ResponseBody
-    public Integer insertSopt(@RequestParam("spot") String spot){
+    public Integer insertSopt(@RequestParam("Spotostr") String Spotostr,@RequestParam("spotspictures") String spotspictures){
         Gson gson = new Gson();
-        Spots spots = gson.fromJson(spot, Spots.class);
-        Integer integer = spotsService.insertSopt(spots);
+        Spots spots = gson.fromJson(Spotostr, Spots.class);
+        Spotspicture spotspicture = gson.fromJson(spotspictures, Spotspicture.class);
+        Integer integer = spotsService.insertSopt(spots,spotspicture);
         System.out.println(integer);
         if (integer==1){
             return 1;

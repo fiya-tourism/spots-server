@@ -25,7 +25,7 @@ public class Spots implements Serializable {
     //景点介绍 存 mongodb
     private String spotsIntroduceId;
     //景点简介（短介绍）  后加
-    private String easintroduce;
+    //private String easintroduce;
     //景点具体介绍  后加
     private String conentisert;
     //景点地址
@@ -40,7 +40,7 @@ public class Spots implements Serializable {
     private Date spotsOpenTime;
     //景点门票库存
     private Integer spotsRepertory;
-    //景点活动
+    //景点简介
     private String spotsActivity;
     //集合地点
     private String spotsVenue;
@@ -66,7 +66,27 @@ public class Spots implements Serializable {
     private Integer spotsYn;
 
 
-
-
-
+    @Override
+    public String toString() {
+        return "Spots{" +
+                "spotsId=" + spotsId +
+                ", staffId=" + staffId +
+                ", spotsName='" + spotsName + '\'' +
+                ", spotsType=" + spotsType +
+                ", spotsIntroduceId='" + spotsIntroduceId + '\'' +
+                ", conentisert='" + conentisert + '\'' +
+                ", spotsAddress='" + spotsAddress + '\'' +
+                ", spotsPrice=" + spotsPrice +
+                ", spotsPhone='" + spotsPhone + '\'' +
+                ", spotsOpenTime=" + spotsOpenTime +
+                ", spotsRepertory=" + spotsRepertory +
+                ", spotsActivity='" + spotsActivity + '\'' +
+                ", spotsVenue='" + spotsVenue + '\'' +
+                ", spotsGotime=" + spotsGotime +
+                ", spotsRelease=" + spotsRelease +
+                ", spotsCreate=" + spotsCreate +
+                ", spotsUpdate=" + spotsUpdate +
+                ", spotsYn=" + spotsYn +
+                '}';
+    }
 }

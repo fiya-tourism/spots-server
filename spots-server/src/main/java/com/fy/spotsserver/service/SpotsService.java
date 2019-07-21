@@ -3,6 +3,9 @@ package com.fy.spotsserver.service;
 import com.fy.spotsserver.Util.DataGrid;
 import com.fy.spotsserver.Util.PageUtils;
 import com.fy.spotsserver.entity.Spots;
+import com.fy.spotsserver.entity.Spotspicture;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @ProjectName: spots-server
@@ -17,9 +20,11 @@ public interface SpotsService {
 
     DataGrid SoptSelect(PageUtils page);
 
-    Integer insertSopt(Spots spots);
+    Integer insertSopt(Spots spots, Spotspicture spotspicture);
 
     Spots SoptByIdSelect(Integer spotsId);
 
     Integer deleteSopt(Integer spotsId);
+
+    Spotspicture SoptSelectImg( Integer spotsId,Integer sequence);
 }
