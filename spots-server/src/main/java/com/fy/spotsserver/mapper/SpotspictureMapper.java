@@ -11,7 +11,7 @@ public interface SpotspictureMapper {
 
     int insertSelective(Spotspicture record);
 
-    Spotspicture selectByPrimaryKey(@Param("spotsId") Integer spotsId,
+    String selectByPrimaryKey(@Param("spotsId") Integer spotsId,
                                     @Param("sequence") Integer sequence);
 
     int updateByPrimaryKeySelective(Spotspicture record);

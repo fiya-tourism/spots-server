@@ -2,6 +2,7 @@ package com.fy.spotsserver.service.impl;
 
 import com.fy.spotsserver.Util.DataGrid;
 import com.fy.spotsserver.Util.PageUtils;
+import com.fy.spotsserver.entity.SpotVO;
 import com.fy.spotsserver.entity.Spots;
 import com.fy.spotsserver.entity.Spotspicture;
 import com.fy.spotsserver.mapper.SpotsMapper;
@@ -44,9 +45,9 @@ public class SpotsServiceImpl implements SpotsService {
     @Override
     public DataGrid SoptSelect(PageUtils page) {
         PageHelper.startPage(page.getPage(),page.getRows());
-        List<Spots> soptSelect= spotsMapper.SoptSelect(page.getPostId());
-        PageInfo<Spots> pageInfo=new PageInfo<>(soptSelect);
-        DataGrid<Spots> dataGrid=new DataGrid<Spots>();
+        List<SpotVO> soptSelect= spotsMapper.SoptSelect();
+        PageInfo<SpotVO> pageInfo=new PageInfo<>(soptSelect);
+        DataGrid<SpotVO> dataGrid=new DataGrid<SpotVO>();
         dataGrid.setRows(soptSelect);
         dataGrid.setTotal(pageInfo.getTotal());
         return dataGrid;
@@ -54,8 +55,8 @@ public class SpotsServiceImpl implements SpotsService {
 
 
     @Override
-    public Spots SoptByIdSelect(Integer spotsId) {
-        Spots spots = spotsMapper.selectByPrimaryKey(spotsId);
+    public SpotVO SoptByIdSelect(Integer spotsId) {
+        SpotVO spots = spotsMapper.selectByPrimaryKey(spotsId);
         String selectcontent = Selectcontent(spotsId);
 
         spots.setConentisert(selectcontent);
@@ -97,9 +98,10 @@ public class SpotsServiceImpl implements SpotsService {
         //多图片上传
         spotspicture.setSpotsId(insert);
         String[] split = spotspicture.getPictureUrl().split(",");
-        for (int i=1;i<=split.length;i++){
+        for (int i=0;i<split.length;i++){
             spotspicture.setPictureUrl(split[i]);
-            spotspicture.setPictureSequence(i);
+            spotspicture.setPictureYn(0);
+            spotspicture.setPictureSequence(1+i);
             spotspictureMapper.insert(spotspicture);
         }
 
@@ -151,9 +153,14 @@ public class SpotsServiceImpl implements SpotsService {
     }
 
     @Override
-    public Spotspicture SoptSelectImg(Integer spotsId,Integer sequence) {
-
+    public String SoptSelectImg(Integer spotsId,Integer sequence) {
         return spotspictureMapper.selectByPrimaryKey(spotsId,sequence);
+    }
+
+    @Override
+    public String SoptByIdSelectImg(Integer id) {
+        Integer sequence = 2;
+        return spotspictureMapper.selectByPrimaryKey(id,sequence);
     }
 
 

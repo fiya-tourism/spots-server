@@ -2,6 +2,7 @@ package com.fy.spotsserver.mapper;
 
 
 import com.fy.spotsserver.Util.PageUtils;
+import com.fy.spotsserver.entity.SpotVO;
 import com.fy.spotsserver.entity.Spots;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,7 @@ public interface SpotsMapper {
 
     int insertSelective(Spots record);
 
-    Spots selectByPrimaryKey(Integer spotsId);
+    SpotVO selectByPrimaryKey(Integer spotsId);
 
     int updateByPrimaryKeySelective(Spots record);
 
@@ -22,5 +23,7 @@ public interface SpotsMapper {
 
     int deleteupdate(Integer spotId);
 
-    List<Spots> SoptSelect(@Param("spotId") Integer spotId);
+    List<SpotVO> SoptSelect();
+
+    List<SpotVO> SoptSelectImg();
 }

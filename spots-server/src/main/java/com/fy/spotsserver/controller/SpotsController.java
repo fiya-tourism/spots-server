@@ -1,12 +1,13 @@
 package com.fy.spotsserver.controller;
 
+
 import com.fy.spotsserver.Util.DataGrid;
 import com.fy.spotsserver.Util.PageUtils;
+import com.fy.spotsserver.entity.SpotVO;
 import com.fy.spotsserver.entity.Spots;
 import com.fy.spotsserver.entity.Spotspicture;
 import com.fy.spotsserver.service.SpotsService;
 import com.google.gson.Gson;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("spotsController")
 public class SpotsController {
+    private static final String PAHT_NAME="http://localhost:8011";
 
     @Autowired
     private SpotsService spotsService;
@@ -38,40 +40,19 @@ public class SpotsController {
      */
     @RequestMapping(value = "soptSelect",method = RequestMethod.GET)
     @ResponseBody
-    public DataGrid<Spots> SoptSelect(@RequestParam("page") String page){
+    public DataGrid<SpotVO> SoptSelect(@RequestParam("page") String page){
         Gson gson = new Gson();
         PageUtils pageUtils = gson.fromJson(page, PageUtils.class);
         DataGrid dataGrid = spotsService.SoptSelect(pageUtils);
-        return dataGrid;
-    }
-    /**
-     * 前台旅游查询带图片
-     * @param page
-     * @return
-     */
-    @RequestMapping(value = "SoptSelectImg",method = RequestMethod.GET)
-    @ResponseBody
-    public List<Spots> SoptSelectImg(@RequestParam("page") String page){
-        Gson gson = new Gson();
-        PageUtils pageUtils = gson.fromJson(page, PageUtils.class);
-        DataGrid dataGrid = spotsService.SoptSelect(pageUtils);
-        List<Spots> rows = dataGrid.getRows();
-        List listSpotspicture = new ArrayList<Spotspicture>();
-        listSpotspicture.add(rows);
-        for (Spots li: rows) {
+        List<SpotVO> rows = dataGrid.getRows();
+        for (SpotVO li : rows) {
             Integer spotsId = li.getSpotsId();
-            Spotspicture spotspictures = spotsService.SoptSelectImg(spotsId,1);
-            if (spotspictures==null){
-                return dataGrid.getRows();
-            }
-            //旅游图片查询
-            listSpotspicture.add(spotspictures);
+            String soptSelectImg = spotsService.SoptSelectImg(spotsId, 1);
+            System.out.println(soptSelectImg);
+            li.setPictureUrl(PAHT_NAME+soptSelectImg);
         }
-
-
-
-        return listSpotspicture;
-    }
+            return dataGrid;
+        }
 
     /**
      * 旅游根据Id查询
@@ -80,8 +61,21 @@ public class SpotsController {
      */
     @RequestMapping(value = "SoptIdSelect",method = RequestMethod.GET)
     @ResponseBody
-    public Spots SoptIdSelect(@RequestParam("id") Integer id){
+    public SpotVO SoptIdSelect(@RequestParam("id") Integer id){
         return  spotsService.SoptByIdSelect(id);
+    }
+    /**
+     * 旅游根据Id查询带图片
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "SoptIdSelectImg",method = RequestMethod.GET)
+    @ResponseBody
+    public SpotVO SoptIdSelectImg(@RequestParam("id") Integer id){
+        SpotVO spots = spotsService.SoptByIdSelect(id);
+        String spotVO = spotsService.SoptByIdSelectImg(spots.getSpotsId());
+        spots.setPictureUrl(PAHT_NAME+spotVO);
+        return spots;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.fy.spotsserver.service;
 
 import com.fy.spotsserver.Util.DataGrid;
 import com.fy.spotsserver.Util.PageUtils;
+import com.fy.spotsserver.entity.SpotVO;
 import com.fy.spotsserver.entity.Spots;
 import com.fy.spotsserver.entity.Spotspicture;
 import java.util.List;
@@ -22,9 +23,12 @@ public interface SpotsService {
 
     Integer insertSopt(Spots spots, Spotspicture spotspicture);
 
-    Spots SoptByIdSelect(Integer spotsId);
+    SpotVO SoptByIdSelect(Integer spotsId);
 
     Integer deleteSopt(Integer spotsId);
 
-    Spotspicture SoptSelectImg( Integer spotsId,Integer sequence);
+    String SoptSelectImg( Integer spotsId,Integer sequence);
+
+
+    String SoptByIdSelectImg(Integer id);
 }

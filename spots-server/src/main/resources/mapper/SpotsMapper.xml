@@ -20,12 +20,31 @@
     <result column="spots_update" jdbcType="DATE" property="spotsUpdate" />
     <result column="spots_yn" jdbcType="INTEGER" property="spotsYn" />
   </resultMap>
+  <resultMap id="BaseResultMapVO" type="com.fy.spotsserver.entity.SpotVO">
+    <id column="spots_id" jdbcType="INTEGER" property="spotsId" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="spots_name" jdbcType="VARCHAR" property="spotsName" />
+    <result column="spots_type" jdbcType="INTEGER" property="spotsType" />
+    <result column="spots_introduce_id" jdbcType="VARCHAR" property="spotsIntroduceId" />
+    <result column="spots_address" jdbcType="VARCHAR" property="spotsAddress" />
+    <result column="spots_price" jdbcType="DOUBLE" property="spotsPrice" />
+    <result column="spots_phone" jdbcType="VARCHAR" property="spotsPhone" />
+    <result column="spots_open_time" jdbcType="TIMESTAMP" property="spotsOpenTime" />
+    <result column="spots_repertory" jdbcType="INTEGER" property="spotsRepertory" />
+    <result column="spots_activity" jdbcType="VARCHAR" property="spotsActivity" />
+    <result column="spots_venue" jdbcType="VARCHAR" property="spotsVenue" />
+    <result column="spots_gotime" jdbcType="TIMESTAMP" property="spotsGotime" />
+    <result column="spots_release" jdbcType="DATE" property="spotsRelease" />
+    <result column="spots_create" jdbcType="DATE" property="spotsCreate" />
+    <result column="spots_update" jdbcType="DATE" property="spotsUpdate" />
+    <result column="spots_yn" jdbcType="INTEGER" property="spotsYn" />
+  </resultMap>
   <sql id="Base_Column_List">
     spots_id, staff_id, spots_name, spots_type, spots_introduce_id, spots_address, spots_price, 
     spots_phone, spots_open_time, spots_repertory, spots_activity, spots_venue, spots_gotime, 
     spots_release, spots_create, spots_update, spots_yn
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMapVO">
     select 
     <include refid="Base_Column_List" />
     from fy_spots
@@ -236,17 +255,14 @@
     where spots_id = #{spotsId,jdbcType=INTEGER}
   </update>
 
-  <select id="SoptSelect" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="SoptSelect" resultMap="BaseResultMapVO">
     select
       <include refid="Base_Column_List"></include>
     from
     fy_spots
-    <where>
+    where
       spots_yn =0
-      <if test="spotId != null">
-      and  spots_id = #{spotId}
-      </if>
-    </where>
+
   </select>
 
   <update id="deleteupdate">
